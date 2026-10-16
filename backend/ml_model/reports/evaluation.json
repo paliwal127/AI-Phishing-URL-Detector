@@ -1,0 +1,782 @@
+{
+  "dataset": {
+    "path": "C:\\Users\\VED\\OneDrive\\Desktop\\innovativeproject\\data\\phiusiil\\PhiUSIIL_Phishing_URL_Dataset.csv",
+    "sha256": "a236549cd369cd80bd478ff8e1779cbf44c58d5c3f79f7a51a1adbed7d06d1c6",
+    "label_convention": "0=legitimate, 1=phishing after normalization"
+  },
+  "cleaning": {
+    "source_rows": 235795,
+    "missing_url_rows": 0,
+    "missing_label_rows": 0,
+    "rows_dropped_for_missing_values": 0,
+    "class_counts_before_cleaning": {
+      "legitimate": 134850,
+      "phishing": 100945
+    },
+    "invalid_urls": 18,
+    "conflicting_urls": 0,
+    "rows_removed_for_conflicting_labels": 0,
+    "duplicate_urls_removed": 437,
+    "rows_after_cleaning": 235340,
+    "class_counts_after_cleaning": {
+      "legitimate": 134850,
+      "phishing": 100490
+    },
+    "unique_hostname_groups": 219083,
+    "phishing_label_argument": "0",
+    "label_mapping": {
+      "0": "legitimate",
+      "1": "phishing"
+    }
+  },
+  "holdout": {
+    "strategy": "first fold of a shuffled stratified 5-fold hostname-grouped split",
+    "train_rows": 188271,
+    "test_rows": 47069,
+    "train_hostname_groups": 175270,
+    "test_hostname_groups": 43813,
+    "hostname_group_overlap": 0
+  },
+  "cross_validation": {
+    "strategy": "3-fold stratified hostname-grouped CV on training groups only",
+    "selection_metric": "phishing F1 at default hybrid risk threshold 60",
+    "candidates": [
+      {
+        "config": {
+          "n_estimators": 100,
+          "class_weight": "balanced",
+          "min_samples_leaf": 1,
+          "max_features": "sqrt",
+          "max_depth": null,
+          "min_samples_split": 2,
+          "random_state": 42,
+          "n_jobs": -1
+        },
+        "phishing_f1_mean": 0.9952635649153301,
+        "phishing_f1_std": 5.736676007542005e-05,
+        "fold_phishing_f1": [
+          0.9952009598080384,
+          0.9952761219210438,
+          0.9953136130169085
+        ]
+      },
+      {
+        "config": {
+          "n_estimators": 150,
+          "class_weight": null,
+          "min_samples_leaf": 2,
+          "max_features": 0.8,
+          "max_depth": 32,
+          "min_samples_split": 5,
+          "random_state": 42,
+          "n_jobs": -1
+        },
+        "phishing_f1_mean": 0.9954582646464832,
+        "phishing_f1_std": 1.1268559445788873e-05,
+        "fold_phishing_f1": [
+          0.9954651075631512,
+          0.9954452587580364,
+          0.9954644276182623
+        ]
+      },
+      {
+        "config": {
+          "n_estimators": 200,
+          "class_weight": "balanced_subsample",
+          "min_samples_leaf": 2,
+          "max_features": "sqrt",
+          "max_depth": 24,
+          "min_samples_split": 2,
+          "random_state": 42,
+          "n_jobs": -1
+        },
+        "phishing_f1_mean": 0.9945407057190568,
+        "phishing_f1_std": 0.00010504651049390353,
+        "fold_phishing_f1": [
+          0.9945597118523243,
+          0.994634951602011,
+          0.994427453702835
+        ]
+      }
+    ],
+    "selected_config_index": 1,
+    "selected_phishing_f1_mean": 0.9954582646464832,
+    "selected_phishing_f1_std": 1.1268559445788873e-05
+  },
+  "threshold_selection": {
+    "score": "hybrid risk score on a 0-100 scale",
+    "default_threshold": 60.0,
+    "selected_threshold": 43.0,
+    "selection_method": "maximize phishing F1 on training-only out-of-fold predictions; ties prefer higher threshold",
+    "default_oof_metrics": {
+      "decision_threshold": 60.0,
+      "accuracy": 0.9961385449697511,
+      "balanced_accuracy": 0.9954894987254082,
+      "phishing_precision": 0.9999121474918109,
+      "phishing_recall": 0.991043884963678,
+      "phishing_f1": 0.995458265394731,
+      "legitimate_precision": 0.9933696773242965,
+      "legitimate_recall": 0.9999351124871384,
+      "macro_f1": 0.9960499239349909,
+      "weighted_f1": 0.9961363043031629,
+      "confusion_matrix": [
+        [
+          107872,
+          7
+        ],
+        [
+          720,
+          79672
+        ]
+      ],
+      "confusion_matrix_labels": [
+        "legitimate",
+        "phishing"
+      ],
+      "classification_report": {
+        "legitimate": {
+          "precision": 0.9933696773242965,
+          "recall": 0.9999351124871384,
+          "f1-score": 0.9966415824752507,
+          "support": 107879.0
+        },
+        "phishing": {
+          "precision": 0.9999121474918109,
+          "recall": 0.991043884963678,
+          "f1-score": 0.995458265394731,
+          "support": 80392.0
+        },
+        "accuracy": 0.9961385449697511,
+        "macro avg": {
+          "precision": 0.9966409124080537,
+          "recall": 0.9954894987254082,
+          "f1-score": 0.9960499239349909,
+          "support": 188271.0
+        },
+        "weighted avg": {
+          "precision": 0.9961633219201548,
+          "recall": 0.9961385449697511,
+          "f1-score": 0.9961363043031629,
+          "support": 188271.0
+        }
+      },
+      "test_samples": 188271,
+      "false_positive_count": 7,
+      "false_negative_count": 720,
+      "false_positive_rate": 6.488751286163202e-05,
+      "false_negative_rate": 0.008956115036322022,
+      "roc_auc": 0.997408921857385,
+      "precision_recall_auc": 0.9980787483191016
+    },
+    "selected_oof_metrics": {
+      "decision_threshold": 43.0,
+      "accuracy": 0.9964147425785171,
+      "balanced_accuracy": 0.9958588703481308,
+      "phishing_precision": 0.999548809986339,
+      "phishing_recall": 0.9920514479052642,
+      "phishing_f1": 0.9957860170681916,
+      "legitimate_precision": 0.9941096218727531,
+      "legitimate_recall": 0.9996662927909973,
+      "macro_f1": 0.9963331155774169,
+      "weighted_f1": 0.996412990315019,
+      "confusion_matrix": [
+        [
+          107843,
+          36
+        ],
+        [
+          639,
+          79753
+        ]
+      ],
+      "confusion_matrix_labels": [
+        "legitimate",
+        "phishing"
+      ],
+      "classification_report": {
+        "legitimate": {
+          "precision": 0.9941096218727531,
+          "recall": 0.9996662927909973,
+          "f1-score": 0.9968802140866422,
+          "support": 107879.0
+        },
+        "phishing": {
+          "precision": 0.999548809986339,
+          "recall": 0.9920514479052642,
+          "f1-score": 0.9957860170681916,
+          "support": 80392.0
+        },
+        "accuracy": 0.9964147425785171,
+        "macro avg": {
+          "precision": 0.996829215929546,
+          "recall": 0.9958588703481308,
+          "f1-score": 0.9963331155774169,
+          "support": 188271.0
+        },
+        "weighted avg": {
+          "precision": 0.9964321633731827,
+          "recall": 0.9964147425785171,
+          "f1-score": 0.996412990315019,
+          "support": 188271.0
+        }
+      },
+      "test_samples": 188271,
+      "false_positive_count": 36,
+      "false_negative_count": 639,
+      "false_positive_rate": 0.0003337072090026789,
+      "false_negative_rate": 0.007948552094735795,
+      "roc_auc": 0.997408921857385,
+      "precision_recall_auc": 0.9980787483191016
+    }
+  },
+  "baseline": {
+    "config": {
+      "n_estimators": 500,
+      "class_weight": "balanced",
+      "min_samples_leaf": 2,
+      "max_leaf_nodes": 2048,
+      "random_state": 42,
+      "n_jobs": -1
+    },
+    "metrics": {
+      "decision_threshold": 60.0,
+      "accuracy": 0.9953047653444943,
+      "balanced_accuracy": 0.9945082801587486,
+      "phishing_precision": 0.9999496956587354,
+      "phishing_recall": 0.9890536371778287,
+      "phishing_f1": 0.9944718212972459,
+      "legitimate_precision": 0.9919087899963221,
+      "legitimate_recall": 0.9999629231396685,
+      "macro_f1": 0.9951956972109095,
+      "weighted_f1": 0.995301397335293,
+      "confusion_matrix": [
+        [
+          26970,
+          1
+        ],
+        [
+          220,
+          19878
+        ]
+      ],
+      "confusion_matrix_labels": [
+        "legitimate",
+        "phishing"
+      ],
+      "classification_report": {
+        "legitimate": {
+          "precision": 0.9919087899963221,
+          "recall": 0.9999629231396685,
+          "f1-score": 0.995919573124573,
+          "support": 26971.0
+        },
+        "phishing": {
+          "precision": 0.9999496956587354,
+          "recall": 0.9890536371778287,
+          "f1-score": 0.9944718212972459,
+          "support": 20098.0
+        },
+        "accuracy": 0.9953047653444943,
+        "macro avg": {
+          "precision": 0.9959292428275288,
+          "recall": 0.9945082801587486,
+          "f1-score": 0.9951956972109095,
+          "support": 47069.0
+        },
+        "weighted avg": {
+          "precision": 0.9953421776188164,
+          "recall": 0.9953047653444943,
+          "f1-score": 0.995301397335293,
+          "support": 47069.0
+        }
+      },
+      "test_samples": 47069,
+      "false_positive_count": 1,
+      "false_negative_count": 220,
+      "false_positive_rate": 3.7076860331467135e-05,
+      "false_negative_rate": 0.01094636282217136,
+      "roc_auc": 0.9975861115431129,
+      "precision_recall_auc": 0.9981487260784467
+    },
+    "false_negative_examples": [
+      {
+        "url": "https://www.faewood.com",
+        "actual_class": "phishing",
+        "predicted_class": "legitimate",
+        "risk_score": 0,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      },
+      {
+        "url": "https://www.tomarchiobibite.it",
+        "actual_class": "phishing",
+        "predicted_class": "legitimate",
+        "risk_score": 0,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      },
+      {
+        "url": "https://www.brandlysms.com",
+        "actual_class": "phishing",
+        "predicted_class": "legitimate",
+        "risk_score": 0,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      },
+      {
+        "url": "https://www.srbtcollegemouda.org",
+        "actual_class": "phishing",
+        "predicted_class": "legitimate",
+        "risk_score": 0,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      },
+      {
+        "url": "https://www.shopwebstudio.com",
+        "actual_class": "phishing",
+        "predicted_class": "legitimate",
+        "risk_score": 0,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      },
+      {
+        "url": "https://www.atoclaim.org",
+        "actual_class": "phishing",
+        "predicted_class": "legitimate",
+        "risk_score": 0,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      },
+      {
+        "url": "https://www.stpaulnewsdaily.com",
+        "actual_class": "phishing",
+        "predicted_class": "legitimate",
+        "risk_score": 0,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      },
+      {
+        "url": "https://www.webfun.website",
+        "actual_class": "phishing",
+        "predicted_class": "legitimate",
+        "risk_score": 0,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      },
+      {
+        "url": "https://www.estilmenut.com",
+        "actual_class": "phishing",
+        "predicted_class": "legitimate",
+        "risk_score": 0,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      },
+      {
+        "url": "https://www.tescilli.com",
+        "actual_class": "phishing",
+        "predicted_class": "legitimate",
+        "risk_score": 0,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      }
+    ],
+    "false_positive_examples": [
+      {
+        "url": "https://www.pythonanywhere.com",
+        "actual_class": "legitimate",
+        "predicted_class": "phishing",
+        "risk_score": 60,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      }
+    ]
+  },
+  "improved": {
+    "config": {
+      "n_estimators": 150,
+      "class_weight": null,
+      "min_samples_leaf": 2,
+      "max_features": 0.8,
+      "max_depth": 32,
+      "min_samples_split": 5,
+      "random_state": 42,
+      "n_jobs": -1
+    },
+    "metrics": {
+      "decision_threshold": 43.0,
+      "accuracy": 0.9961120907603731,
+      "balanced_accuracy": 0.9955107048614436,
+      "phishing_precision": 0.9994983697015299,
+      "phishing_recall": 0.9913921783262016,
+      "phishing_f1": 0.9954287712637074,
+      "legitimate_precision": 0.9936242352767746,
+      "legitimate_recall": 0.9996292313966854,
+      "macro_f1": 0.9960232295464642,
+      "weighted_f1": 0.9961100321506705,
+      "confusion_matrix": [
+        [
+          26961,
+          10
+        ],
+        [
+          173,
+          19925
+        ]
+      ],
+      "confusion_matrix_labels": [
+        "legitimate",
+        "phishing"
+      ],
+      "classification_report": {
+        "legitimate": {
+          "precision": 0.9936242352767746,
+          "recall": 0.9996292313966854,
+          "f1-score": 0.996617687829221,
+          "support": 26971.0
+        },
+        "phishing": {
+          "precision": 0.9994983697015299,
+          "recall": 0.9913921783262016,
+          "f1-score": 0.9954287712637074,
+          "support": 20098.0
+        },
+        "accuracy": 0.9961120907603731,
+        "macro avg": {
+          "precision": 0.9965613024891522,
+          "recall": 0.9955107048614436,
+          "f1-score": 0.9960232295464642,
+          "support": 47069.0
+        },
+        "weighted avg": {
+          "precision": 0.9961324328945003,
+          "recall": 0.9961120907603731,
+          "f1-score": 0.9961100321506705,
+          "support": 47069.0
+        }
+      },
+      "test_samples": 47069,
+      "false_positive_count": 10,
+      "false_negative_count": 173,
+      "false_positive_rate": 0.00037076860331467133,
+      "false_negative_rate": 0.008607821673798388,
+      "roc_auc": 0.9969439732703619,
+      "precision_recall_auc": 0.9977316796756802
+    },
+    "false_negative_examples": [
+      {
+        "url": "https://www.faewood.com",
+        "actual_class": "phishing",
+        "predicted_class": "legitimate",
+        "risk_score": 0,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      },
+      {
+        "url": "https://www.quangtuantn.com",
+        "actual_class": "phishing",
+        "predicted_class": "legitimate",
+        "risk_score": 0,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      },
+      {
+        "url": "https://www.commbankonlinehelp.com",
+        "actual_class": "phishing",
+        "predicted_class": "legitimate",
+        "risk_score": 0,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      },
+      {
+        "url": "https://www.ambtechonline.com",
+        "actual_class": "phishing",
+        "predicted_class": "legitimate",
+        "risk_score": 0,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      },
+      {
+        "url": "https://www.tomarchiobibite.it",
+        "actual_class": "phishing",
+        "predicted_class": "legitimate",
+        "risk_score": 0,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      },
+      {
+        "url": "https://www.brandlysms.com",
+        "actual_class": "phishing",
+        "predicted_class": "legitimate",
+        "risk_score": 0,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      },
+      {
+        "url": "https://www.srbtcollegemouda.org",
+        "actual_class": "phishing",
+        "predicted_class": "legitimate",
+        "risk_score": 0,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      },
+      {
+        "url": "https://www.filedn.eu",
+        "actual_class": "phishing",
+        "predicted_class": "legitimate",
+        "risk_score": 0,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      },
+      {
+        "url": "https://www.shopwebstudio.com",
+        "actual_class": "phishing",
+        "predicted_class": "legitimate",
+        "risk_score": 0,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      },
+      {
+        "url": "https://www.atoclaim.org",
+        "actual_class": "phishing",
+        "predicted_class": "legitimate",
+        "risk_score": 0,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      }
+    ],
+    "false_positive_examples": [
+      {
+        "url": "https://www.beltran.work",
+        "actual_class": "legitimate",
+        "predicted_class": "phishing",
+        "risk_score": 45,
+        "rule_signals": [
+          "The .work suffix is frequently abused."
+        ]
+      },
+      {
+        "url": "https://www.swinoujscie.pl",
+        "actual_class": "legitimate",
+        "predicted_class": "phishing",
+        "risk_score": 45,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      },
+      {
+        "url": "https://www.westulverstoneprimary.education.tas.edu.au",
+        "actual_class": "legitimate",
+        "predicted_class": "phishing",
+        "risk_score": 47,
+        "rule_signals": [
+          "The hostname has multiple subdomains.",
+          "The URL contains a high proportion of varied characters."
+        ]
+      },
+      {
+        "url": "https://www.britishpsychotherapyfoundation.org.uk",
+        "actual_class": "legitimate",
+        "predicted_class": "phishing",
+        "risk_score": 49,
+        "rule_signals": [
+          "The URL contains a high proportion of varied characters."
+        ]
+      },
+      {
+        "url": "https://www.collectors-club-of-great-britain.co.uk",
+        "actual_class": "legitimate",
+        "predicted_class": "phishing",
+        "risk_score": 49,
+        "rule_signals": [
+          "The URL contains an unusually high number of hyphens.",
+          "The URL contains a high proportion of varied characters."
+        ]
+      },
+      {
+        "url": "https://www.springfieldeducationalfurniture.co.uk",
+        "actual_class": "legitimate",
+        "predicted_class": "phishing",
+        "risk_score": 49,
+        "rule_signals": [
+          "The URL contains a high proportion of varied characters."
+        ]
+      },
+      {
+        "url": "https://www.apocalypse2008-2015.com",
+        "actual_class": "legitimate",
+        "predicted_class": "phishing",
+        "risk_score": 51,
+        "rule_signals": [
+          "The URL contains many digits."
+        ]
+      },
+      {
+        "url": "https://www.association-of-noise-consultants.co.uk",
+        "actual_class": "legitimate",
+        "predicted_class": "phishing",
+        "risk_score": 53,
+        "rule_signals": [
+          "The URL contains an unusually high number of hyphens."
+        ]
+      },
+      {
+        "url": "https://www.thetimes03jan2009.com",
+        "actual_class": "legitimate",
+        "predicted_class": "phishing",
+        "risk_score": 59,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      },
+      {
+        "url": "https://www.pythonanywhere.com",
+        "actual_class": "legitimate",
+        "predicted_class": "phishing",
+        "risk_score": 64,
+        "rule_signals": [
+          "No strong lexical warning signs were found. This is not a guarantee that the site is safe."
+        ]
+      }
+    ]
+  },
+  "feature_importance": [
+    {
+      "feature": "url_length",
+      "importance": 0.006546796867589208
+    },
+    {
+      "feature": "domain_length",
+      "importance": 0.001775515606703593
+    },
+    {
+      "feature": "dot_count",
+      "importance": 0.0016665610361464918
+    },
+    {
+      "feature": "hyphen_count",
+      "importance": 0.000394532740730598
+    },
+    {
+      "feature": "special_char_count",
+      "importance": 0.0
+    },
+    {
+      "feature": "subdomain_count",
+      "importance": 0.019737745525256048
+    },
+    {
+      "feature": "has_ip_address",
+      "importance": 0.0
+    },
+    {
+      "feature": "uses_https",
+      "importance": 0.47315357226263416
+    },
+    {
+      "feature": "digit_count",
+      "importance": 0.03333132184604414
+    },
+    {
+      "feature": "suspicious_keyword_count",
+      "importance": 0.0001782423240244724
+    },
+    {
+      "feature": "has_at_symbol",
+      "importance": 0.0
+    },
+    {
+      "feature": "is_shortened",
+      "importance": 0.0
+    },
+    {
+      "feature": "suspicious_tld",
+      "importance": 0.001959355868507587
+    },
+    {
+      "feature": "path_length",
+      "importance": 0.4584782903203008
+    },
+    {
+      "feature": "query_parameter_count",
+      "importance": 0.0
+    },
+    {
+      "feature": "has_fragment",
+      "importance": 0.0
+    },
+    {
+      "feature": "url_entropy",
+      "importance": 0.002675633103718023
+    },
+    {
+      "feature": "brand_keyword_count",
+      "importance": 4.454705463178363e-05
+    },
+    {
+      "feature": "brand_lookalike",
+      "importance": 5.78854437129991e-05
+    },
+    {
+      "feature": "host_has_punycode",
+      "importance": 0.0
+    },
+    {
+      "feature": "has_port",
+      "importance": 0.0
+    }
+  ],
+  "runtime_seconds": 608.941362999999,
+  "reproducibility": {
+    "random_state": 42,
+    "feature_schema_version": 2,
+    "feature_names": [
+      "url_length",
+      "domain_length",
+      "dot_count",
+      "hyphen_count",
+      "special_char_count",
+      "subdomain_count",
+      "has_ip_address",
+      "uses_https",
+      "digit_count",
+      "suspicious_keyword_count",
+      "has_at_symbol",
+      "is_shortened",
+      "suspicious_tld",
+      "path_length",
+      "query_parameter_count",
+      "has_fragment",
+      "url_entropy",
+      "brand_keyword_count",
+      "brand_lookalike",
+      "host_has_punycode",
+      "has_port"
+    ],
+    "class_mapping": {
+      "0": "legitimate",
+      "1": "phishing"
+    },
+    "preprocessing_fitted_on_test_data": false
+  }
+}

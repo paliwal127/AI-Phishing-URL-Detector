@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "SignalGuard Link Check",
+  "version": "1.0.0",
+  "description": "Check a selected link with your local SignalGuard API before opening it.",
+  "permissions": ["contextMenus", "storage", "activeTab"],
+  "host_permissions": ["http://127.0.0.1:8000/*"],
+  "background": { "service_worker": "background.js" },
+  "action": {
+    "default_title": "Check selected link",
+    "default_popup": "popup/popup.html"
+  }
+}

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SignalGuard</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header><span class="mark">S</span><div><b>SignalGuard</b><small>LOCAL LINK CHECK</small></div><span class="state-dot"></span></header>
+    <main>
+      <p class="eyebrow">SELECTED LINK</p>
+      <p id="url" class="url">Choose a link on a page, then open this extension.</p>
+      <button id="scan" class="button primary">Analyze link</button>
+      <section id="result" hidden>
+        <div id="verdict" class="verdict"></div>
+        <div id="score" class="score"></div>
+        <ul id="reasons"></ul>
+        <p class="note">The destination was not opened or fetched.</p>
+        <button id="open" class="button" hidden>Open link anyway</button>
+      </section>
+      <p id="error" class="error" hidden></p>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>
